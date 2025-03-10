@@ -7,6 +7,7 @@
  use App\Http\Requests\StoreTaskRequest;
  use App\Http\Requests\UpdateTaskRequest;
  use App\Http\Resources\TaskResource;
+ use Illuminate\Support\Facades\Gate;
 
  class TaskController extends Controller
  {
@@ -33,6 +34,7 @@
       */
      public function show(Task $task)
      {
+         Gate::authorize('view', $task);
          return TaskResource::make($task);
      }
 
