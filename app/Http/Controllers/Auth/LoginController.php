@@ -4,11 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,9 +21,9 @@ class LoginController extends Controller
             ]);
         } */
 
-        if(!Auth::attempt($request->only('email', 'password'))){
-            Throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+        if (!auth()->attempt($request->only(['email', 'password']))) {
+            throw ValidationException::withMessages([
+                'email' => ['The credentials you entered are incorrect.']
             ]);
         }
     }
