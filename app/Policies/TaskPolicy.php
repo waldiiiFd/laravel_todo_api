@@ -12,6 +12,14 @@ class TaskPolicy
     /**
      * Determine whether the user can view the model.
      */
+    public function viewAny(User $user): bool
+    {
+       return true;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
     public function view(User $user, Task $task): bool
     {
         return $user->id === $task->user_id;
@@ -23,7 +31,7 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,7 +39,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return false;
+        return $user->id === $task->user_id;
     }
 
     /**
@@ -39,6 +47,6 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return false;
+        return $user->id === $task->user_id;
     }
 }
