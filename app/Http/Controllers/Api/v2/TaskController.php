@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
@@ -48,7 +49,8 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         if ($request->user()->cannot('update', $task)) {
-            abort(403);
+            abort(403, 'You are not authorized to update this task'); ;
+
         }
         $task->update($request->validated());
 
@@ -61,7 +63,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if (request()->user()->cannot('delete', $task)) {
-            abort(403);
+            abort(403, 'You are not authorized to delete this task');
         }
         $task->delete();
 

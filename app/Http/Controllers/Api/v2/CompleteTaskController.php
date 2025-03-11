@@ -14,6 +14,9 @@ class CompleteTaskController extends Controller
      */
     public function __invoke(Request $request, Task $task)
     {
+        if ($request->user()->cannot('update', $task)) {
+            abort(403, 'You are not authorized to update this task');
+        }
         $task->is_completed = $request->is_completed;
         $task->save();
         return TaskResource::make($task);
